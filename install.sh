@@ -20,7 +20,7 @@ SPI_SPEED="${HALOW_SPI_SPEED:-10000000}"
 # before the nrc driver probes the SPI target. Override these with HALOW_* env vars
 # if your carrier uses different pins, or set them empty to disable.
 RESET_GPIO="${HALOW_RESET_GPIO:-17}"
-RESET_ACTIVE_LOW="${HALOW_RESET_ACTIVE_LOW:-1}"
+RESET_ACTIVE_LOW="${HALOW_RESET_ACTIVE_LOW:-0}"
 ENABLE_GPIO="${HALOW_ENABLE_GPIO:-27}"
 ENABLE_ACTIVE_HIGH="${HALOW_ENABLE_ACTIVE_HIGH:-1}"
 
@@ -50,7 +50,7 @@ Options are supplied as environment variables:
   HALOW_SPI_SPEED=10000000           Runtime SPI bus speed in Hz
   HALOW_SPI_PROBE_SPEED=1000000       Conservative speed used during first probe
   HALOW_RESET_GPIO=17                Module reset GPIO; empty disables reset control
-  HALOW_RESET_ACTIVE_LOW=1           Reset GPIO polarity, 1 means pulse low
+  HALOW_RESET_ACTIVE_LOW=0           Reset GPIO polarity, 1 means pulse low
   HALOW_ENABLE_GPIO=27               Module enable/power GPIO; empty disables enable control
   HALOW_ENABLE_ACTIVE_HIGH=1         Enable GPIO polarity, 1 means high enables
   HALOW_ADDRESS=10.42.0.2/24         Optional static address
@@ -229,7 +229,7 @@ if [[ -n "\${ENABLE_GPIO}" ]]; then
 fi
 
 if [[ -n "\${RESET_GPIO}" ]]; then
-  if [[ "\${RESET_ACTIVE_LOW}" = "1" ]]; then
+  if [[ "\${RESET_ACTIVE_LOW}" = "0" ]]; then
     set_gpio "\${RESET_GPIO}" 0
     sleep 0.2
     set_gpio "\${RESET_GPIO}" 1
